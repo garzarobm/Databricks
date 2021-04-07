@@ -1,33 +1,47 @@
-''' This will be used to inference all files within one folder'''
+''' Testing sub in python regex'''
+import re
 
-''' with os ---------> NOT WORKING YET
-import os
 
-for filename in os.listdir("../folder_with_logs"):
-	print(str(filename)
-	#with open(os.path.join(os.getcwd(), filename), 'r') as f: # open in readonly mode
+phrase_to_look_for = "    "
+string_to_place = "GOOFY"
 
-'''
+
+
+
+def parse_line(line_string):
+	x = re.sub(phrase_to_look_for, string_to_place, line_string)
+	if x:
+		print("line == " + str(line_string) )	
+		print(x)
+		return(1)
+	return 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # FILES IN CURRENT DIRECTORY -----> WORKING
 #Note THAT THIS ONE IS THIS DIRECTORY
 import os
 import glob
+file_num = 1
 for filename in glob.glob('*.txt'):
+	line_number = 0
 	with open(os.path.join(os.getcwd(), filename),encoding="utf8", errors='ignore') as f: # open in readonly mode
 		for line_txt in f:
-			print(line_txt)
-
-''' #FILES IN DIFFERENT PATH ---------> NOT WORKING 
-import os
-import glob
-print(os.getcwd())
-path = os.getcwd() + '/../folder_with_logs/'
-print(path)
-for filename in glob.glob(os.path.join(path, '*.txt')):
-	print(str(filename))
-	with open(os.path.join(os.getcwd(), filename), 'r') as f: # open in readonly mode
-		for line_txt in f:
-			print(line_text)
-'''
+			check_phrase = parse_line(line_txt)
+			if check_phrase == 1:
+				print("substituted on file_num=" + str(file_num) + ", line_number=" + str(line_number))
+			line_number += 1 
+	file_num += 1
