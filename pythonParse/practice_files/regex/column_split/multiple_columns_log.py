@@ -22,29 +22,34 @@ splitter = "\t"
 def parse_line(line_string, msg_num):
 	my_dict = {}
 	line_string = re.sub("\x00", "", line_string)
-	parts = re.split(splitter, line_string)
-	people = parts[2].strip().split("to")
-	my_dict['Id'] = msg_num
-	my_dict['Name'] = people[0][5:].strip()
-	my_dict['Person_To'] =  people[1][:-1].strip()
-	my_dict['Date'] = parts[0].strip() 
-	my_dict['Time'] = parts[1].strip()
-	message = parts[3]
-	my_dict['Message'] = message 
-	messages = message.lower()
-	strings = messages.split(" ")
-	if "yes" in strings:
-		my_dict['Said_Yes'] = 1
-	else: 
-		my_dict['Said_Yes'] = 0
-	if "no" in strings:
-		my_dict['Said_No'] = 1
-	else: 
-		my_dict['Said_No'] = 0
-	if parts:
-		return my_dict
+	if(line_string):
+		parts = re.split(splitter, line_string)
+		if len(parts) >= 3:
+			message = parts[3]
+			my_dict['Message'] = message 
+			messages = message.lower()
+			strings = messages.split(" ")
+			if "yes" in strings:
+				my_dict['Said_Yes'] = 1
+			else: 
+				my_dict['Said_Yes'] = 0
+			if "no" in strings:
+				my_dict['Said_No'] = 1
+			else: 
+				my_dict['Said_No'] = 0
+		if len(parts) >= 2:
+			people = parts[2].strip().split("to")
+			my_dict['Name'] = people[0][5:].strip()
+			my_dict['Person_To'] =  people[1][:-1].strip()
+			my_dict['Time'] = parts[1].strip()
+		if len(parts) >= 1:
+			my_dict['Id'] = msg_num
+			my_dict['Date'] = parts[0].strip() 
+		if parts:
+			return my_dict
+		return None
 	return None
-
+	
 
 # FILES IN CURRENT DIRECTORY -----> WORKING
 #Note THAT THIS ONE IS THIS DIRECTORY
