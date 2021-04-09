@@ -9,6 +9,9 @@ import re
 #NEEDS WORK WITH DATE BUT ALL LINES ARE OFFICIALLY INFERENCED!!!
 
 # February 16, 2021           EOF
+
+# i didn't change your date string, just created a new one
+date_string_test = r'[(d{20}\w{2},\d{4})]'
 date_string = "\S+\s\d+,\s\d+"
 time_string = "\d:\d+:\d+\s\S+"
 person_from_string = r"\bfrom\s(.+)\sto\b"
@@ -17,7 +20,7 @@ message_string = r"\b:\s+(.+)"
 
 #making first columns for csv (without any inferencing, straight regex)
 def parse_line(line_string):
-	date_str = re.findall(date_string, line_string)
+	date_str = re.findall(date_string_test, line_string)
 	if date_str:
 		print("line == " + str(line_string) )	
 		print(date_str)
